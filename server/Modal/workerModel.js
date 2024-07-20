@@ -20,11 +20,11 @@ const workerSchema = new mongoose.Schema({
   },
   rating: {
     type: mongoose.Types.ObjectId,
-    ref: 'rating',
+    ref: 'Rating',
   },
   address: {
     type: mongoose.Types.ObjectId,
-    ref: 'address',
+    ref: 'Address',
   },
   active: {
     type: Boolean,
@@ -39,4 +39,5 @@ const workerSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-module.exports = new mongoose.model("worker", workerSchema);
+module.exports = new mongoose.model("Worker", workerSchema);
+
