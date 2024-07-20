@@ -1,13 +1,13 @@
 const { mongoose } = require("mongoose");
 
 
-const ReviewModal = new mongoose.createSchema({
+const RatingModal = new mongoose.createSchema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     require: true
   },
-  content: {
+  rating: {
     type: string,
     require: true
   },
@@ -18,5 +18,5 @@ const ReviewModal = new mongoose.createSchema({
   }
 });
 
-const Review = mongoose.model('Review', ReviewModal);
-export default Review;
+const Rating = mongoose.model('Review', ReviewModal);
+export default Rating;
