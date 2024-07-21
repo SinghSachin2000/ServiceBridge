@@ -50,11 +50,11 @@ const userSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: new Date()
+    default: Date.now().toLocaleString()
   },
   updatedAt: {
     type: Date,
-    default: new Date()
+    default: Date.now().toLocaleString()
   }
 })
 export const User = mongoose.model('User', userSchema);

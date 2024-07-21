@@ -17,6 +17,15 @@ app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/worker", workerRouter);
 
 database.connect();
+
+//global catch
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Internal Server Error' });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })
+
+
