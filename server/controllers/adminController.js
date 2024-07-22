@@ -1,7 +1,7 @@
-import Admin from "../Modal/adminModal";
-import Category from "../Modal/CategoryModal";
+import Admin from "../Modal/adminModal.js";
+import Category from "../Modal/CategoryModal.js";
 import bcrypt from "bcrypt";
-import { createCookie } from "../utils/createCookike";
+import { createCookie } from "../utils/createCookike.js";
 
 export const register = async (req, res, next) => {
   try {

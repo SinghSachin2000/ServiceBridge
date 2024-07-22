@@ -1,7 +1,7 @@
-import Address from "../Modal/AddressModal";
-import User from "../Modal/UserModal";
+import Address from "../Modal/AddressModal.js";
+import User from "../Modal/UserModal.js";
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
 try{
 const {name,email,password,phoneno}=req.body
 if(!name|| !email || !password || !phoneno){
@@ -50,7 +50,7 @@ return res.status(500).json({
 })
 }
 }
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
 try{
 const {email,password} = req.body
 if(!email || !password){
@@ -103,7 +103,7 @@ return res.status(500).json({
 }
 }
 
-exports.logout = async (req, res) => {
+export const logout = async (req, res) => {
 try{
 res.clearCookie("token",{
     httpOnly:true,

@@ -15,19 +15,19 @@ const addressSchema = new mongoose.Schema({
     type: ["Home", "Office", "Other"]
   },
   pincode: {
-    type: number,
+    type: Number,
     required: true
   },
   street: {
-    type: string,
+    type: String,
     required: true
   },
   country: {
-    type: string,
+    type: String,
     required: true
   },
   city: {
-    type: string,
+    type: String,
     required: true
   }
 });

@@ -1,14 +1,14 @@
-import { mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 const categorySchema = new mongoose.Schema({
   categoryName: {
-    type: string,
+    type: String,
     required: true,
     unique: true,
     maxLength: 50,
   },
   description: {
-    type: string,
+    type: String,
     maxLength: 100,
   },
   jobs: [{
@@ -16,6 +16,6 @@ const categorySchema = new mongoose.Schema({
     ref: "Jobs"
   }]
 })
-export const User = mongoose.model('Category', categorySchema);
+export const Category = mongoose.model('Category', categorySchema);
 export default Category;
 

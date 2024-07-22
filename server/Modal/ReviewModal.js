@@ -8,7 +8,7 @@ const ReviewModal = new mongoose.createSchema({
     require: true
   },
   content: {
-    type: string,
+    type: String,
     require: true
   },
   workerId: {

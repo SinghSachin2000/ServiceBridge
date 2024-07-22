@@ -1,31 +1,31 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const mongoose = require('mongoose')
-const userRouter = require('./router/userRouter');
-const workerRouter = require('./router/workerRouter');
-const adminRouter = require('./router/adminRouter');
-const database = require("./config/connection")
+import express from 'express';
+import dotenv from 'dotenv';
+import userRouter from './router/userRouter.js';
+import workerRouter from './router/workerRouter.js';
+import adminRouter from './router/adminRoutes.js';
+import { connect as databaseConnect } from './config/connection.js';
+
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8001;
 
-//route spltiting
+// Middleware setup
+app.use(express.json());
 
-app.use("/api/v1/user", userRouter);
-app.use("/api/v1/admin", adminRouter);
-app.use("/api/v1/worker", workerRouter);
+// Route splitting
+app.use('/api/v1/user', userRouter);
+app.use('/api/v1/admin', adminRouter);
+app.use('/api/v1/worker', workerRouter);
 
-database.connect();
+databaseConnect();
 
-//global catch
+// Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Internal Server Error' });
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`)
-})
-
-
+  console.log(`Server is running on port ${port}`);
+});

@@ -1,4 +1,4 @@
-import { mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 const jobSchema = new mongoose.Schema({
   workerId: {
@@ -26,7 +26,7 @@ const jobSchema = new mongoose.Schema({
     default: Date.now()
   },
   status: {
-    type: string,
+    type: String,
     enum: ['pending', 'completed', 'accepted', 'rejected'],
     default: 'pending'
   }

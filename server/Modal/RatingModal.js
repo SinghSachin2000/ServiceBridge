@@ -1,4 +1,4 @@
-const { mongoose } = require("mongoose");
+import mongoose  from "mongoose";
 
 
 const RatingModal = new mongoose.createSchema({
@@ -8,7 +8,7 @@ const RatingModal = new mongoose.createSchema({
     require: true
   },
   rating: {
-    type: string,
+    type: String,
     require: true
   },
   workerId: {
@@ -18,5 +18,5 @@ const RatingModal = new mongoose.createSchema({
   }
 });
 
-const Rating = mongoose.model('Review', ReviewModal);
+const Rating = mongoose.model('Review', RatingModal);
 export default Rating;

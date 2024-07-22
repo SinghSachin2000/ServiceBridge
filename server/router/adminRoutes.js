@@ -1,5 +1,5 @@
-import { express } from "express";
-import { register, login, getProfile, createCategory } from "../controllers/adminController";
+import  express  from "express";
+import { register, login, getProfile, createCategory } from "../controllers/adminController.js";
 const adminRouter = express.Router();
 
 
