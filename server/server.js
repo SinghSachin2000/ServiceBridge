@@ -1,31 +1,16 @@
-<<<<<<< HEAD
-const express = require('express');
-const dotenv = require('dotenv');
-const mongoose = require('mongoose')
-const userRouter = require('./router/userRouter');
-const workerRouter = require('./router/workerRouter');
-const adminRouter = require('./router/adminRouter');
-const database = require("./config/connection");
-const ratingRouter = require('./router/ratingRoutes');
-const morgon = require("morgan");
-=======
 import express from 'express';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import { morgan } from 'morgan';
 import userRouter from './router/userRouter.js';
 import workerRouter from './router/workerRouter.js';
-import adminRouter from './router/adminRoutes.js';
-import { connect as databaseConnect } from './config/connection.js';
-
->>>>>>> f2ca9839486170cf5ba4586449c18d76d6b8392b
+import adminRouter from './router/adminRouter.js';
+import ratingRouter from './router/ratingRoutes.js';
+import { connect } from './config/connection.js';
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8001;
-
-<<<<<<< HEAD
-
-app.use(morgon());
-
 //route spltiting
 
 app.use("/api/v1/user", userRouter);
@@ -33,17 +18,15 @@ app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/worker", workerRouter);
 app.use("/api/v1/rating", ratingRouter);
 database.connect();
-=======
+
 // Middleware setup
 app.use(express.json());
+app.use(morgan());
 
-// Route splitting
-app.use('/api/v1/user', userRouter);
-app.use('/api/v1/admin', adminRouter);
-app.use('/api/v1/worker', workerRouter);
 
-databaseConnect();
->>>>>>> f2ca9839486170cf5ba4586449c18d76d6b8392b
+
+connect();
+
 
 // Global error handler
 app.use((err, req, res, next) => {
