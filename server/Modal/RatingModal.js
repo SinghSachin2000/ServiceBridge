@@ -18,5 +18,5 @@ const RatingModal = new mongoose.createSchema({
   }
 });
 
-const Rating = mongoose.model('Review', ReviewModal);
+const Rating = mongoose.model('Review', RatingModal);
 export default Rating;

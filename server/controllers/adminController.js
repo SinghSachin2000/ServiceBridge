@@ -1,7 +1,7 @@
-import Admin from "../Modal/adminModal";
-import Category from "../Modal/CategoryModal";
-import bcrypt from "bcrypt";
-import { createCookie } from "../utils/createCookike";
+const Admin = require("../Modal/adminModal");
+const Category = require("../Modal/CategoryModal");
+const bcrypt = require("bcrypt");
+const { createCookie } = require("../utils/createCookike");
 
 export const register = async (req, res, next) => {
   try {
@@ -82,7 +82,70 @@ export const getProfile = async (req, res) => {
     admin: res.admin
   })
 }
+export const getCategory = async (req, res, next) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  try {
+    const getAllCategory = await Category.find().skip((page - 1) * limit).limit(limit);
+    const total = await Category.countDocuments();
+    return res.status(200).json({
+      data: getAllCategory,
+      currentPage: page,
+      total
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+export const deleteCategory = async (req, res, next) => {
+  try {
+    const { id } = req.param;
+    const findCategory = await Category.findById(id);
+    if (!findCategory) {
+      return res.status(400).json({
+        message: "Category not found",
+        success: false
+      });
+    }
+    const deleteCategory = await Category.findByIdAndDelete(id);
+    if (!deleteCategory) {
+      return res.status(400).json({
+        message: "Error in category deleted successfully",
+        success: false
+      })
+    }
+    return res.status(200).json({
+      message: "Category deleted successfully",
+      success: true
+    })
+  } catch (error) {
+    next(error);
+  }
+}
 
-export const createCategory = async (req, res) => {
-
+export const createCategory = async (req, res, next) => {
+  try {
+    const { name } = req.body;
+    if (!name) {
+      return res.status(400).json({
+        message: "Name not found",
+        success: false
+      })
+    }
+    const category = await Category.create({
+      name
+    });
+    if (!category) {
+      return res.status(400).json({
+        message: "Error in category creation",
+        success: false
+      })
+    }
+    return res.status(201).json({
+      category,
+      success: true
+    })
+  } catch (e) {
+    next(e);
+  }
 }

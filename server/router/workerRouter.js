@@ -1,5 +1,5 @@
-import { express } from "express";
-import { register, login } from "../controllers/workerController";
+const express = require("express");
+const { register, login } = require("../controllers/workerController");
 
 const workerRouter = express.Router();
 
