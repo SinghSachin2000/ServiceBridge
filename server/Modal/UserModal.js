@@ -15,8 +15,7 @@ const userSchema = new mongoose.Schema({
     }
   },
   profileImage: {
-    type: string,
-    required: true
+    URL: String
   },
   address: {
     type: mongoose.Schema.Types.ObjectId,
