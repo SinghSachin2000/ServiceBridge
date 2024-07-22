@@ -1,19 +1,20 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const workerSchema = new mongoose.Schema({
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   password: {
     type: String,
-    require: true,
+    required: true,
   },
   currpassword: {
     type: String,
   },
   phone: {
     type: Number,
+    required: true,
   },
   profileImg: {
     URL: String,
@@ -25,10 +26,11 @@ const workerSchema = new mongoose.Schema({
   address: {
     type: mongoose.Types.ObjectId,
     ref: 'Address',
+    
   },
   active: {
     type: Boolean,
-    default: true
+    default: true,
   },
   authToken: {
     type: String,
@@ -36,8 +38,7 @@ const workerSchema = new mongoose.Schema({
   workingHours: {
     type: String,
   },
-
 }, { timestamps: true });
 
-module.exports = new mongoose.model("Worker", workerSchema);
-
+export const Worker = mongoose.model('Worker', workerSchema);
+export default Worker;

@@ -41,7 +41,7 @@ export const register = async (req, res) => {
     return res.status(200).json({
       success: true,
       user,
-      message: "User registered successfully",
+      message: "user registered successfully",
     })
   } catch (error) {
     console.error(error)
@@ -51,6 +51,7 @@ export const register = async (req, res) => {
     })
   }
 }
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body
@@ -115,7 +116,7 @@ export const logout = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Logout successful"
-    })
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,

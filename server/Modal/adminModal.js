@@ -1,16 +1,16 @@
-import { moongose } from "moongose";
+import mongoose from "mongoose";
 
-const adminSchema = new moongose.Schmea({
+const adminSchema = new mongoose.Schema({
   name: {
-    type: string,
+    type: String,
     required: true
   },
   email: {
-    type: string,
+    type: String,
     required: true
   },
   password: {
-    type: string,
+    type: String,
     required: true
   },
   createdAt: {
@@ -19,5 +19,5 @@ const adminSchema = new moongose.Schmea({
   }
 });
 
-export const Admin = moongose.model('Admin', adminSchema);
+export const Admin = mongoose.model('Admin', adminSchema);
 export default Admin;

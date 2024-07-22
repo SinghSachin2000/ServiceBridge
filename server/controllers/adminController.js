@@ -3,6 +3,7 @@ const Category = require("../Modal/CategoryModal");
 const bcrypt = require("bcrypt");
 const { createCookie } = require("../utils/createCookike");
 
+
 export const register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;

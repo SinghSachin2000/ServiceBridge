@@ -2,7 +2,7 @@ import { mongoose } from "mongoose";
 
 const userSchema = new mongoose.Schema({
   name: {
-    type: string,
+    type: String,
     required: true
   },
   location: {
@@ -23,27 +23,27 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   email: {
-    type: string,
+    type: String,
     required: true
   },
   password: {
-    type: string,
+    type: String,
     required: true
   },
   authToken: {
-    type: string,
+    type: String,
     required: true
   },
   active: {
-    type: boolean
+    type: Boolean
   },
   phoneno: {
     countryCode: {
-      type: string,
+      type: String,
       required: true
     },
     number: {
-      type: string,
+      type: String,
       required: true
     }
   },
