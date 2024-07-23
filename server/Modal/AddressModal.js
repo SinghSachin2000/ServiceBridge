@@ -1,16 +1,6 @@
 import { mongoose } from "mongoose";
 
 const addressSchema = new mongoose.Schema({
-  location: {
-    type: {
-      type: String,
-      enum: ['Point'],
-      
-    },
-    coordinates: {
-      type: [Number],
-    }
-  },
   type: {
     type: ["Home", "Office", "Other"]
   },

@@ -1,6 +1,5 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import morgan from 'morgan';
 import userRouter from './router/userRouter.js';
 import workerRouter from './router/workerRouter.js';

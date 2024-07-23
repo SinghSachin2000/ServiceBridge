@@ -20,10 +20,6 @@ export const register = async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(password, 10)
     const addressDetails = await Address.create({
-      location: {
-        type: null,
-        coordinates: null
-      },
       type: null,
       pincode: null,
       street: null,
@@ -38,11 +34,13 @@ export const register = async (req, res) => {
       authToken: '',
       address: addressDetails._id
     })
+    //TODO create token
     return res.status(200).json({
       success: true,
       user,
-      message: "user registered successfully",
+      message: "User registered successfully",
     })
+
   } catch (error) {
     console.error(error)
     return res.status(500).json({
@@ -70,7 +68,7 @@ export const login = async (req, res) => {
 
     if (await bcrypt.compare(password, user.password)) {
       const token = jwt.sign(
-        { email: user.email, id: user._id },
+        { id: user._id },
         JWT_SECRET,
         {
           expiresIn: "24h"
@@ -101,6 +99,41 @@ export const login = async (req, res) => {
       success: false,
       message: "Login failure please try again",
     })
+  }
+}
+
+export const updateAddress = async (req, res) => {
+  try {
+    const { lat, lng } = req.body;
+    const id = res.user;
+    const userAddress = User.findById(id);
+    if (!userAddress) {
+      return res.status(400).json({
+        message: "User Address not found",
+        success: false
+      })
+    }
+    const location = {
+      type: "Point",
+      coordinates: [lat, lng]
+    }
+    const updateAddress = await User.findOneAndUpdate(
+      { _id: id },
+      { $set: { location: { location } } },
+      { new: true }
+    );
+    if (!updateAddress) {
+      return res.status(400).json({
+        success: false,
+        message: 'Error in updating the address'
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: 'Address updated successfully!'
+    });
+  } catch (error) {
+    next(error);
   }
 }
 

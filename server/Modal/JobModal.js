@@ -5,6 +5,15 @@ const jobSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Worker"
   },
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+    },
+    coordinates: {
+      type: [Number],
+    }
+  },
   categoryId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category"
@@ -14,7 +23,7 @@ const jobSchema = new mongoose.Schema({
     required: true
   },
   noOfHours: {
-    type: Number,
+    type: [Number],
     required: true
   },
   pincode: {
@@ -27,10 +36,10 @@ const jobSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'completed', 'accepted', 'rejected'],
-    default: 'pending'
+    enum: ['Posted', 'Ordered', 'Accepted', 'Completed'],
+    default: 'Posted'
   }
 })
-export const User = mongoose.model('Job', jobSchema);
+export const Job = mongoose.model('Job', jobSchema);
 export default Job;
 

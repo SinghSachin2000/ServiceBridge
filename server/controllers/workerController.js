@@ -25,10 +25,6 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const addressDetails = await Address.create({
-      location: {
-        type: null,
-        coordinates: null
-      },
       type: null,
       pincode: 121002,
       street: "address",
@@ -42,7 +38,6 @@ export const register = async (req, res) => {
       phone,
       authToken: '',
       address: addressDetails._id
-
     });
 
     res.status(200).json({

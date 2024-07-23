@@ -26,7 +26,15 @@ const workerSchema = new mongoose.Schema({
   address: {
     type: mongoose.Types.ObjectId,
     ref: 'Address',
-    
+  },
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+    },
+    coordinates: {
+      type: [Number],
+    }
   },
   active: {
     type: Boolean,

@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { useRecoilState } from "recoil";
 
 dotenv.config();
 
@@ -8,6 +9,22 @@ const { JWT_SECRET, COOKIE_NAME } = process.env;
 export const createCookie = (res, adminId) => {
   try {
     const token = jwt.sign({ _id: adminId }, JWT_SECRET);
+    res.status(201);
+    res.cookie(COOKIE_NAME, token, {
+      httpOnly: true,
+      maxAge: 2 * 60 * 60 * 1000
+    });
+    return res.json({ message: 'Cookie created successfully' });
+  } catch (error) {
+    return res.status(400).json({
+      error,
+      message: 'Error while creating cookie'
+    });
+  }
+};
+export const createCookieUser = (res, userId) => {
+  try {
+    const token = jwt.sign({ _id: userId }, JWT_SECRET);
     res.status(201);
     res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
