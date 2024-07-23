@@ -1,7 +1,7 @@
 const { mongoose } = require("mongoose");
 
 
-const ReviewModal = new mongoose.createSchema({
+const ReviewModal = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

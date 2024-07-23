@@ -1,5 +1,5 @@
-const Address = require("../Modal/AddressModal");
-const User = require("../Modal/UserModal");
+import Address from "../Modal/AddressModal.js";
+import User from "../Modal/UserModal.js";
 const { COOKIE_NAME, JWT_SECRET } = process.env;
 
 export const register = async (req, res) => {
@@ -51,7 +51,6 @@ export const register = async (req, res) => {
     })
   }
 }
-
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body

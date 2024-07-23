@@ -1,11 +1,8 @@
-<<<<<<< HEAD
-const { express } = require("express");
-const { register, login, getProfile, createCategory, deleteCategory, getCategory } = require("../controllers/adminController");
-const { isAdminAuth } = require("../middleWare/isAuthAdmin");
-=======
-import  express  from "express";
-import { register, login, getProfile, createCategory } from "../controllers/adminController.js";
->>>>>>> f2ca9839486170cf5ba4586449c18d76d6b8392b
+
+import express from "express";
+import { register, login, getProfile, createCategory, deleteCategory, getCategory } from "../controllers/adminController.js";
+import { isAdminAuth } from "../middleWare/isAuthAdmin.js";
+
 const adminRouter = express.Router();
 
 adminRouter.post('/register-admin', register);

@@ -1,4 +1,4 @@
-import Admin from "../Modal/adminModal";
+import Admin from "../Modal/adminModal.js";
 import jwt from "jsonwebtoken";
 const { COOKIE_NAME, JWT_SECRET } = process.env;
 

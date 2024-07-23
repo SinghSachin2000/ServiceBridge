@@ -1,10 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import { morgan } from 'morgan';
+import morgan from 'morgan';
 import userRouter from './router/userRouter.js';
 import workerRouter from './router/workerRouter.js';
-import adminRouter from './router/adminRouter.js';
+import adminRouter from './router/adminRoutes.js';
 import ratingRouter from './router/ratingRoutes.js';
 import { connect } from './config/connection.js';
 dotenv.config();
@@ -17,11 +17,11 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/worker", workerRouter);
 app.use("/api/v1/rating", ratingRouter);
-database.connect();
+connect();
 
 // Middleware setup
 app.use(express.json());
-app.use(morgan());
+app.use(morgan("dev"));
 
 
 

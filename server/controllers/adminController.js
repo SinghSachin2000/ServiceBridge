@@ -1,7 +1,7 @@
-const Admin = require("../Modal/adminModal");
-const Category = require("../Modal/CategoryModal");
-const bcrypt = require("bcrypt");
-const { createCookie } = require("../utils/createCookike");
+import Admin from "../Modal/adminModal.js";
+import Category from "../Modal/CategoryModal.js";
+import bcrypt from "bcrypt";
+import { createCookie } from "../utils/createCookike.js";
 
 
 export const register = async (req, res, next) => {

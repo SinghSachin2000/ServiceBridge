@@ -1,7 +1,7 @@
-import mongoose  from "mongoose";
+import mongoose from "mongoose";
 
 
-const RatingModal = new mongoose.createSchema({
+const RatingModal = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

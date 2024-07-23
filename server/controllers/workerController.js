@@ -4,9 +4,9 @@ import bcrypt from 'bcrypt';
 
 export const register = async (req, res) => {
   const { name, password, phone } = req.body;
-  
+
   try {
-    if (!name || !password || !phone ) {
+    if (!name || !password || !phone) {
       return res.status(403).json({
         success: false,
         message: 'All fields are required',
@@ -25,24 +25,24 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const addressDetails = await Address.create({
-    location: {
+      location: {
         type: null,
         coordinates: null
       },
-      type:null,
-      pincode:121002,
-      street:"address",
-      country:"India",
-      city:"fbd"
-})
+      type: null,
+      pincode: 121002,
+      street: "address",
+      country: "India",
+      city: "fbd"
+    })
 
     let newUser = await workerModel.create({
       name,
       password: hashedPassword,
       phone,
       authToken: '',
-      address:addressDetails._id
-      
+      address: addressDetails._id
+
     });
 
     res.status(200).json({
