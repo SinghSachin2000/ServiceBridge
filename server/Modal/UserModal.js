@@ -20,17 +20,12 @@ const userSchema = new mongoose.Schema({
   address: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Address',
-    required: true
   },
   email: {
     type: String,
     required: true
   },
   password: {
-    type: String,
-    required: true
-  },
-  authToken: {
     type: String,
     required: true
   },
@@ -49,11 +44,11 @@ const userSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now().toLocaleString()
+    default: Date.now()
   },
   updatedAt: {
     type: Date,
-    default: Date.now().toLocaleString()
+    default: Date.now()
   }
 })
 export const User = mongoose.model('User', userSchema);
