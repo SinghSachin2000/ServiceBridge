@@ -6,29 +6,27 @@ import workerRouter from './router/workerRouter.js';
 import adminRouter from './router/adminRoutes.js';
 import ratingRouter from './router/ratingRoutes.js';
 import { connect } from './config/connection.js';
+import cookieParser from 'cookie-parser';
+
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8001;
-// Middleware setup
+
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(morgan("dev"));
 
-
-
-
-//route spltiting
+// Route splitting
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/worker", workerRouter);
 app.use("/api/v1/rating", ratingRouter);
+
+// Connect to database
 connect();
-
-
-
-
-connect();
-
 
 // Global error handler
 app.use((err, req, res, next) => {

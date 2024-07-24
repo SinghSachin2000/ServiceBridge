@@ -1,9 +1,10 @@
+import { mongoose } from "mongoose";
 import Category from "../Modal/CategoryModal.js";
 import Job from "../Modal/JobModal.js";
 
 export const createJob = async (req, res) => {
   try {
-    const { categoryId, price, minHour, maxHour } = req.body;
+    const { name, description, images, categoryId, price, minHour, maxHour } = req.body;
     const category = await Category.findById({
       id: categoryId
     });
@@ -13,9 +14,12 @@ export const createJob = async (req, res) => {
         success: false
       })
     }
-    const worker = res.worker;
+    const worker = req.worker;
     const noOfHours = [minHour, maxHour];
     const createJob = await Job.create({
+      name: name,
+      description: description,
+      images: images,
       workerId: worker._id,
       categoryId: categoryId,
       location: worker.location,
@@ -38,3 +42,49 @@ export const createJob = async (req, res) => {
     next(error);
   }
 }
+export const getJobDetails = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const allJobs = await Job.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(id),
+        }
+      },
+      {
+        $lookup: {
+          from: "Worker",
+          localField: "workerId",
+          foreignField: "_id",
+          as: "worker"
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          description: 1,
+          noOfHours: 1,
+          images: 1,
+          price: 1,
+          status: 1,
+          worker: {
+            _id: 1,
+            phone: 1,
+            name: 1,
+            phone: 1,
+            AverageRating: 1,
+            profileImg: 1
+          }
+        }
+      }
+    ]);
+    return res.status(200).json({
+      jobs: allJobs,
+      success: true,
+    });
+  } catch (e) {
+    next(e);
+  }
+}
+//TODO :get all the reviews by jobid

@@ -7,13 +7,13 @@ import bcrypt from "bcrypt"
 export const register = async (req, res) => {
   try {
     const { name, email, password, profileImage, phoneno } = req.body;
+    console.log(req.body);
     if (!name || !email || !password || !phoneno) {
       return res.status(400).json({
         success: false,
         message: 'All fields are required',
       });
     }
-    console.log("data dikha",req.body)
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -24,7 +24,7 @@ export const register = async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(password, 10)
 
-  
+
     const newUser = await User.create({
       name,
       email,
@@ -33,9 +33,9 @@ export const register = async (req, res) => {
       phoneno,
       active: true,
     });
-    createCookieUser(res,newUser._id,newUser);
-    console.log("newuser",newUser)
-    
+    createCookieUser(res, newUser._id, newUser);
+    console.log("newuser", newUser)
+
 
   } catch (error) {
     console.error(error)
@@ -61,19 +61,15 @@ export const login = async (req, res) => {
         message: "User is not registered with us please signup to continue",
       })
     }
-     const isMatch = await bcrypt.compare(password, user.password)
+    const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) {
-        res.status(404);
-        return res.json({
-          message:"Wrong credentials for admin",
-          success:false,
-        })
-    } 
-    createCookie(user._id);
-    return res.json({
-      sucess: "true",
-      user
-    })
+      res.status(404);
+      return res.json({
+        message: "Wrong credentials for admin",
+        success: false,
+      })
+    }
+    createCookieUser(res, user._id, user);
   } catch (error) {
     console.error(error)
     return res.status(500).json({
@@ -83,11 +79,12 @@ export const login = async (req, res) => {
   }
 }
 
-export const updateAddress = async (req, res) => {
+export const updateAddress = async (req, res, next) => {
   try {
     const { lat, lng } = req.body;
-    const id = res.user;
-    const userAddress = User.findById(id);
+    const { _id } = req.user;
+
+    const userAddress = User.findById(_id);
     if (!userAddress) {
       return res.status(400).json({
         message: "User Address not found",
@@ -99,8 +96,8 @@ export const updateAddress = async (req, res) => {
       coordinates: [lat, lng]
     }
     const updateAddress = await User.findOneAndUpdate(
-      { _id: id },
-      { $set: { location: { location } } },
+      { _id },
+      { $set: { location } },
       { new: true }
     );
     if (!updateAddress) {
@@ -111,6 +108,7 @@ export const updateAddress = async (req, res) => {
     }
     return res.status(200).json({
       success: true,
+      user: updateAddress,
       message: 'Address updated successfully!'
     });
   } catch (error) {

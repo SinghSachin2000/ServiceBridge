@@ -3,15 +3,15 @@ import jwt from "jsonwebtoken";
 const { COOKIE_NAME, JWT_SECRET } = process.env;
 
 export const isAdminAuth = async (req, res, next) => {
-  const { COOKIE_NAME } = req.cookies;
-  if (!COOKIE_NAME) {
+  const token = req.cookies[COOKIE_NAME];
+  if (!token) {
     return res.status(401).json({
       success: false,
       messge: "Unauthorized Admin"
     });
   }
   try {
-    const decoded = jwt.decode(COOKIE_NAME, JWT_SECRET);
+    const decoded = jwt.decode(token, JWT_SECRET);
     req.admin = await Admin.findById(decoded._id);
     next();
   } catch (e) {

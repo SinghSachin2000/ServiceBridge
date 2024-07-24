@@ -6,7 +6,7 @@ dotenv.config();
 
 const { JWT_SECRET, COOKIE_NAME } = process.env;
 
-export const createCookie = (res, adminId,admin) => {
+export const createCookie = (res, adminId, admin) => {
   try {
     const token = jwt.sign({ _id: adminId }, JWT_SECRET);
     res.status(201);
@@ -15,10 +15,10 @@ export const createCookie = (res, adminId,admin) => {
       maxAge: 2 * 60 * 60 * 1000
     });
     return res.json({
-      success:true,
-       message: 'Cookie created successfully' ,
+      success: true,
+      message: 'Admin created Added',
       admin
-      });
+    });
   } catch (error) {
     return res.status(400).json({
       error,
@@ -26,7 +26,7 @@ export const createCookie = (res, adminId,admin) => {
     });
   }
 };
-export const createCookieUser = (res, userId,user) => {
+export const createCookieUser = (res, userId, user) => {
   try {
     const token = jwt.sign({ _id: userId }, JWT_SECRET);
     res.status(201);
@@ -34,12 +34,12 @@ export const createCookieUser = (res, userId,user) => {
       httpOnly: true,
       maxAge: 2 * 60 * 60 * 1000
     });
-    return res.json({ 
-      success:true,
-      message: 'Cookie created successfully',
+    return res.json({
+      success: true,
+      message: 'User added successfully',
       user
 
-     });
+    });
   } catch (error) {
     return res.status(400).json({
       error,

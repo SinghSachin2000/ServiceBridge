@@ -19,18 +19,18 @@ const workerSchema = new mongoose.Schema({
   profileImg: {
     URL: String,
   },
-  AverageRating:[
+  AverageRating: [
     {
-    type: mongoose.Types.ObjectId,
-    ref: 'Rating',
-  },
-] ,
-reviews :[
-  {
-    type:mongoose.Types.ObjectId,
-    ref : "Review",
-  }
-],
+      type: mongoose.Types.ObjectId,
+      ref: 'Rating',
+    },
+  ],
+  reviews: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Review",
+    }
+  ],
   address: {
     type: mongoose.Types.ObjectId,
     ref: 'Address',
