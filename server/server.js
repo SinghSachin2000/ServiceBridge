@@ -10,17 +10,20 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8001;
-//route spltiting
+// Middleware setup
+app.use(express.json());
+app.use(morgan("dev"));
 
+
+
+
+//route spltiting
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/worker", workerRouter);
 app.use("/api/v1/rating", ratingRouter);
 connect();
 
-// Middleware setup
-app.use(express.json());
-app.use(morgan("dev"));
 
 
 
