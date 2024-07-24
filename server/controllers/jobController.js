@@ -3,7 +3,7 @@ import Job from "../Modal/JobModal.js";
 
 export const createJob = async (req, res) => {
   try {
-    const { categoryId, price, minHour, maxHour, pinCode } = req.body;
+    const { categoryId, price, minHour, maxHour } = req.body;
     const category = await Category.findById({
       id: categoryId
     });
@@ -13,19 +13,12 @@ export const createJob = async (req, res) => {
         success: false
       })
     }
-    if (minHour > maxHour) {
-      return res.status(400).json({
-        message: "Minimum Time should be less than Maximum Time",
-        success: false
-      })
-    }
-    const worker = req.worker;
+    const worker = res.worker;
     const noOfHours = [minHour, maxHour];
     const createJob = await Job.create({
       workerId: worker._id,
       categoryId: categoryId,
       location: worker.location,
-      pincode: pinCode,
       noOfHours: noOfHours,
       price: price
     });
