@@ -47,3 +47,27 @@ export const createCookieUser = (res, userId,user) => {
     });
   }
 };
+
+//creating cookie for worker
+export const createCookieWorker = (res, workerId, worker) => {
+  try {
+    const token = jwt.sign({ _id: workerId }, JWT_SECRET);
+    res.status(201);
+    res.cookie(COOKIE_NAME, token, {
+      httpOnly: true,
+      maxAge: 2 * 60 * 60 * 1000, // 2 hours
+    });
+    const Worker = { ...worker._doc };
+    delete Worker.password;
+    return res.json({
+      success: true,
+      message: 'Cookie created successfully',
+      Worker,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      error,
+      message: 'Error while creating cookie',
+    });
+  }
+};
