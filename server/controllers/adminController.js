@@ -2,7 +2,7 @@ import Admin from "../Modal/adminModal.js";
 import Category from "../Modal/CategoryModal.js";
 import bcrypt from "bcrypt";
 import { createCookie } from "../utils/createCookike.js";
-import { response } from "express";
+
 
 
 export const register = async (req, res, next) => {
@@ -24,7 +24,7 @@ export const register = async (req, res, next) => {
       email,
       password: hash
     });
-    createCookie(res,admin._id,admin);
+    createCookie(res, admin._id, admin);
 
   } catch (e) {
     next(e);

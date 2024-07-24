@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 const { COOKIE_NAME, JWT_SECRET } = process.env;
 
 export const isWorkerAuth = async (req, res, next) => {
-  const { COOKIE_NAME } = req.cookies;
+  const token = req.cookies[COOKIE_NAME];
   if (!COOKIE_NAME) {
     return res.status(401).json({
       success: false,
@@ -11,7 +11,7 @@ export const isWorkerAuth = async (req, res, next) => {
     });
   }
   try {
-    const decoded = jwt.decode(COOKIE_NAME, JWT_SECRET);
+    const decoded = jwt.decode(token, JWT_SECRET);
     req.worker = await Worker.findById(decoded._id);
     next();
   } catch (e) {

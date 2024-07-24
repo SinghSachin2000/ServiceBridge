@@ -16,19 +16,19 @@ export const createReview = async (req, res) => {
         message: "worker is not there!!"
       })
     }
-
-    const alreadyReviewed = await Review.findOne({
-      userId: userId,
-      workerId: workerId
-    })
-
-    if (alreadyReviewed) {
-      return res.status(403).json({
-        success: false,
-        message: "worker already reviewed by the user"
+    /*
+      const alreadyReviewed = await Review.findOne({
+        userId: userId,
+        workerId: workerId
       })
-    }
-
+  
+      if (alreadyReviewed) {
+        return res.status(403).json({
+          success: false,
+          message: "worker already reviewed by the user"
+        })
+      }
+  */
     const newreview = await Review.create({
       userId: userId,
       content: content,
@@ -63,10 +63,10 @@ export const getAllReview = async (req, res) => {
       })
       .populate({
         path: "Worker",
-        select: "firstName lastName email image"
+        select: "name  email profileImg"
       })
       .exec()
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: allReview,
     })
