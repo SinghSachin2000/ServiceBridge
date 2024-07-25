@@ -104,5 +104,50 @@ export const getProfile = async (req, res) => {
 };
 
 export const updateAddress = async (req, res) => {
-  
+  try {
+    const { lat, lng } = req.body;
+
+    const workerId = req.worker._id
+    
+    const workerAdress = await workerModel.findById(workerId);
+
+    if (!workerAdress) {
+      res.status(404).json({
+        success: false,
+        message:"worker address not found"
+      })
+    }
+
+    const location = {
+      type: "Point",
+      coordinates: [lng, lat],
+    }
+
+    //update address
+    const updatedWorker = await workerModel.findByIdAndUpdate(
+      workerId,
+      { $set: { location } },
+      {new:true}
+    );
+
+    if (!updatedWorker) {
+      return res.status(400).json({
+        success: false,
+        message:"Error in updating the address"
+      })
+    }
+    return res.status(200).json({
+      success: true,
+      message: 'Address updated successfully!',
+      updatedWorker,
+    })
+    
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server Error'
+    });
+  }
 }
+
