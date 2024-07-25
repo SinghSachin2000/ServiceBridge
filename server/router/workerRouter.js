@@ -1,5 +1,5 @@
 import express from 'express';
-import { register, login, logout, updateAddress } from '../controllers/workerController.js';
+import { register, login, logout, updateAddress, updateProfile } from '../controllers/workerController.js';
 import jobRouter from './jobRouter.js';
 import { isWorkerAuth } from '../middleWare/isAuthWorker.js';
 
@@ -11,6 +11,7 @@ workerRouter.post('/register-worker', register);
 workerRouter.post('/login-worker', login);
 workerRouter.post('/logout-worker', logout);
 workerRouter.put('/update-address', isWorkerAuth, updateAddress);
+workerRouter.post('/update-profile/:id', isWorkerAuth, updateProfile);
 
 
 export default workerRouter;

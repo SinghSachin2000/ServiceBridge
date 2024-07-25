@@ -44,8 +44,6 @@ export const register = async (req, res) => {
   }
 };
 
-/*-----------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------*/
 
 export const login = async (req, res) => {
   const { password, phone } = req.body;
@@ -90,7 +88,7 @@ export const logout = async (req, res) => {
   res.clearCookie("cookieName", {
     seucre: false,
     sameSite: "strict",
-    path: "/worker"
+    path: "/"
   })
   res.status(200);
   return res.json({
@@ -148,6 +146,40 @@ export const updateAddress = async (req, res) => {
       success: false,
       message: 'Server Error'
     });
+  }
+}
+
+export const updateProfile = async (req, res) => {
+  if (req.worker._id != req.params.id) {
+    return res.status(404).json({
+      success: false,
+      message: "You can only update your account"
+    });
+  }
+  try {
+    if (req.body.password) {
+        req.body.password=bcrypt.hashSync(req.body.password,10)
+    } 
+    
+    const updatedWorker = await workerModel.findByIdAndUpdate(req.params.id, {
+    $set: {
+        name: req.body.name,
+        password: req.body.password,
+        profileImg: req.body.profileImg,
+        address:req.body.address
+      },
+    }, { new: true })
+    
+    //const { password, ...rest } = updatedWorker._doc
+    return res.status(200).json({
+      message: "Profile updated successfully",
+      updatedWorker
+    })
+
+  } catch (error) {
+    return res.status(500).json({
+      message:"Internal server error "
+    })
   }
 }
 
