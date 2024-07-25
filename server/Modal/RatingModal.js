@@ -8,7 +8,7 @@ const RatingModal = new mongoose.Schema({
     require: true
   },
   rating: {
-    type: String,
+    type: Number,
     require: true
   },
   workerId: {
@@ -18,5 +18,5 @@ const RatingModal = new mongoose.Schema({
   }
 });
 
-const Rating = mongoose.model('Review', RatingModal);
+const Rating = mongoose.model('Rating', RatingModal);
 export default Rating;

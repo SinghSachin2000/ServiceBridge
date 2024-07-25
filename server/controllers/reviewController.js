@@ -1,33 +1,21 @@
+import mongoose from "mongoose"
 import Review from "../Modal/ReviewModal.js";
 import WorkerModel from "../Modal/workerModel.js"
 
 export const createReview = async (req, res) => {
   try {
-    const userId = req.user._id
-    const { content, workerId } = req.body
-
-    const workerDetails = await WorkerModel.findOne({
-      _id: workerId
-    })
+    const userId = req.user._id;
+    const { content } = req.body;
+    const { workerId } = req.params;
+console.log("content",content)
+    const workerDetails = await WorkerModel.findById(workerId);
     if (!workerDetails) {
       return res.status(404).json({
         success: false,
         message: "worker is not there!!"
       })
     }
-    /*
-      const alreadyReviewed = await Review.findOne({
-        userId: userId,
-        workerId: workerId
-      })
   
-      if (alreadyReviewed) {
-        return res.status(403).json({
-          success: false,
-          message: "worker already reviewed by the user"
-        })
-      }
-  */
     const newreview = await Review.create({
       userId: userId,
       content: content,
@@ -35,7 +23,7 @@ export const createReview = async (req, res) => {
     })
     await WorkerModel.findByIdAndUpdate(workerId, {
       $push: {
-        reviews: newreview,
+        reviews: newreview._id,
       }
     })
     return res.status(201).json({
@@ -55,19 +43,35 @@ export const createReview = async (req, res) => {
 
 export const getAllReview = async (req, res) => {
   try {
-    const allReview = await Review.find({})
+    const { workerId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(workerId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid workerId",
+      });
+    }
+    const allReviews = await Review.find({workerId})
       .populate({
-        path: "User",
-        select: "name profileImage email"
+        path: "userId",
+        select: "name profileImage email",
+        model: 'User' 
       })
       .populate({
-        path: "Worker",
+        path: "workerId",
         select: "name  email profileImg"
       })
+      .sort({ createdAt: -1 })
       .exec()
+
+      if (allReviews.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "No reviews found for this worker",
+        });
+      }
     return res.status(200).json({
       success: true,
-      data: allReview,
+      data: allReviews,
     })
   } catch (e) {
     console.error(e)
