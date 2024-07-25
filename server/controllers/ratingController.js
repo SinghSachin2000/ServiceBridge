@@ -5,7 +5,8 @@ import WorkerModel from "../Modal/workerModel.js"
 export const createRating = async (req, res) => {
   try {
     const userId = req.user.id
-    const { rating, workerId } = req.body
+    const { rating} = req.body
+   const {workerId }= req.params
 
     const workerDetails = await WorkerModel.findOne({
       _id: workerId
@@ -36,7 +37,7 @@ export const createRating = async (req, res) => {
     })
     await WorkerModel.findByIdAndUpdate(workerId, {
       $push: {
-        ratings: newrating,
+        ratings: newrating._id,
       }
     })
     return res.status(201).json({
@@ -54,60 +55,88 @@ export const createRating = async (req, res) => {
   }
 }
 
+
+
+
 export const getAverageRating = async (req, res) => {
   try {
-    const workerId = req.body.workerId
-    const result = await Rating.aggregate([
-      {
-        $match: {
-          workerId: new mongoose.types.ObjectId(workerId),
+    const { workerId } = req.params;
 
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          averageRating: { $avg: "$AverageRating" },
-        }
-      }
-    ])
-    if (result.length > 0) {
+    if (!mongoose.Types.ObjectId.isValid(workerId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid workerId",
+      });
+    }
+
+    const worker = await WorkerModel.findById(workerId).populate('ratings');
+    if (!worker) {
+      return res.status(404).json({
+        success: false,
+        message: "Worker not found",
+      });
+    }
+
+    const ratings = worker.ratings;
+    if (ratings.length === 0) {
       return res.status(200).json({
         success: true,
-        averageRating: result[0].averageRating,
-      })
+        averageRating: 0,
+      });
     }
+
+    const sum = ratings.reduce((acc, rating) => acc + rating.rating, 0); 
+    const averageRating = sum / ratings.length;
+
     return res.status(200).json({
       success: true,
-      averageRating: 0,
-    })
+      averageRating: averageRating,
+    });
+
   } catch (e) {
-    console.log(e)
+    console.log(e);
     return res.status(500).json({
       success: false,
-      message: "Failed to retrieve the rating for the course",
+      message: "Failed to retrieve the rating for the worker",
       error: e.message,
-    })
+    });
   }
-}
+};
+
 
 export const getAllRating = async (req, res) => {
   try {
-    const allRating = await Rating.find({})
+    const { workerId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(workerId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid workerId",
+      });
+    }
+    const allRatings = await Rating.find({ workerId: workerId })
       .sort({ rating: "desc" })
       .populate({
-        path: "User",
-        select: "name profileImage email"
+        path: 'userId',
+        select: 'name profileImage email' 
       })
       .populate({
-        path: "Worker",
-        select: "firstName lastName email image"
+        path: 'workerId',
+        select: 'name email profileImg' 
       })
-      .exec()
+      .exec();
+
+    if (allRatings.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No ratings found for this worker",
+      });
+    }
+
     res.status(200).json({
       success: true,
-      data: allRating,
-    })
+      data: allRatings,
+    });
   } catch (e) {
     console.error(e)
     return res.status(500).json({

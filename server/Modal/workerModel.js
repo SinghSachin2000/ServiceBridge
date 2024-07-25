@@ -19,15 +19,15 @@ const workerSchema = new mongoose.Schema({
   profileImg: {
     URL: String,
   },
-  AverageRating: [
+  ratings: [
     {
-      type: mongoose.Types.ObjectId,
-      ref: 'Rating',
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Rating",
     },
   ],
   reviews: [
     {
-      type: mongoose.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Review",
     }
   ],
