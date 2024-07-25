@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const baseUrlExport = process.env.NEXT_PUBLIC_BACKEND_URL;
+export const baseUrlExport = "https://servicebridge.onrender.com";
 
 const instance = axios.create({
   baseURL: baseUrlExport,

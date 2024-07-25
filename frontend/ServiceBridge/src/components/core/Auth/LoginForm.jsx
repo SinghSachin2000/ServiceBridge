@@ -22,15 +22,30 @@ const handleonChange = (e)=>{
         
     }))
 }
+/*
+const AddDeatils = useMutation({
+    mutationKey : ["addDeatils"],
+    mutationfn: async (data) => {
+        return await postData("/register", data);
+    },
+    onSuccess: (data) => {
+      console.log(data.data);
+    },
+    onError : (data) => {
+       console.log(data);
+    }
+})
+    */
 
 const handleonSubmit = (e)=>{
     e.preventDefault()
     dispatch()
+    AddDeatils.mutate(data);
 }
 
 return (
     <form>
-
+      
     </form>
 )
 }
