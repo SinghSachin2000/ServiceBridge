@@ -11,4 +11,4 @@ function Register(){
     )
 }
 
-export
+export default Register
