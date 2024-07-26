@@ -7,15 +7,14 @@ export const createReview = async (req, res) => {
     const userId = req.user._id;
     const { content } = req.body;
     const { workerId } = req.params;
-console.log("content",content)
     const workerDetails = await WorkerModel.findById(workerId);
     if (!workerDetails) {
       return res.status(404).json({
         success: false,
-        message: "worker is not there!!"
+        message: "Worker is not there!!"
       })
     }
-  
+
     const newreview = await Review.create({
       userId: userId,
       content: content,
@@ -50,11 +49,11 @@ export const getAllReview = async (req, res) => {
         message: "Invalid workerId",
       });
     }
-    const allReviews = await Review.find({workerId})
+    const allReviews = await Review.find({ workerId })
       .populate({
         path: "userId",
         select: "name profileImage email",
-        model: 'User' 
+        model: 'User'
       })
       .populate({
         path: "workerId",
@@ -63,12 +62,12 @@ export const getAllReview = async (req, res) => {
       .sort({ createdAt: -1 })
       .exec()
 
-      if (allReviews.length === 0) {
-        return res.status(404).json({
-          success: false,
-          message: "No reviews found for this worker",
-        });
-      }
+    if (allReviews.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No reviews found for this worker",
+      });
+    }
     return res.status(200).json({
       success: true,
       data: allReviews,
