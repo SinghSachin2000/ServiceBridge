@@ -9,7 +9,7 @@ const { JWT_SECRET, COOKIE_NAME } = process.env;
 export const createCookie = (res, adminId, admin) => {
   try {
     const token = jwt.sign({ _id: adminId }, JWT_SECRET);
-    res.status(201);
+    res.status(201)
     res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
       maxAge: 2 * 60 * 60 * 1000

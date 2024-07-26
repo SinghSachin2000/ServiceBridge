@@ -7,6 +7,7 @@ import adminRouter from './router/adminRoutes.js';
 import ratingRouter from './router/ratingRoutes.js';
 import { connect } from './config/connection.js';
 import cookieParser from 'cookie-parser';
+import cors from "cors"
 
 dotenv.config();
 
@@ -18,6 +19,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan("dev"));
+app.use(
+	cors({
+		origin: "*",
+		credentials: true,
+	})
+);
 
 // Route splitting
 app.use("/api/v1/user", userRouter);

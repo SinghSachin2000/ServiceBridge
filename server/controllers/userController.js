@@ -8,7 +8,7 @@ export const register = async (req, res) => {
   try {
     const { name, email, password, profileImage, phoneno } = req.body;
     console.log(req.body);
-    if (!name || !email || !password || !phoneno) {
+    if (!name || !email || !password || !phoneno || !phoneno.countryCode || !phoneno.number) {
       return res.status(400).json({
         success: false,
         message: 'All fields are required',

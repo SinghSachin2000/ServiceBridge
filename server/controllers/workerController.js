@@ -4,23 +4,23 @@ import { createCookieWorker } from '../utils/createCookike.js';
 
 
 export const register = async (req, res) => {
-  const { name, password, phone } = req.body;
+  const { name, email, password, profileImage, phoneno } = req.body;
   console.log(req.body);
 
   try {
-    if (!name || !password || !phone) {
+    if (!name ||!email ||!password || !phoneno || !phoneno.countryCode || !phoneno.number) {
       return res.status(403).json({
         success: false,
         message: 'All fields are required',
       });
     }
 
-    let existingUser = await workerModel.findOne({ phone });
+    let existingUser = await workerModel.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: 'Worker already exists, please try with another number or login instead',
+        message: 'Worker already exists, please try with email or login instead',
       });
     }
 
@@ -30,7 +30,9 @@ export const register = async (req, res) => {
     let newUser = await workerModel.create({
       name,
       password: hashedPassword,
-      phone,
+      email,
+      profileImage,
+      phoneno,
     });
 
     createCookieWorker(res,newUser._id,newUser);

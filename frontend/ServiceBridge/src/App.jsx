@@ -9,6 +9,10 @@ import Home from "./pages/Home";
 import Navbar from "./components/common/Navbar"
 import LoginForm from './pages/Login'
 import Register from "./pages/Register"
+import WorkerHomePage from './pages/WorkerHomepage'
+
+
+
 function App() {
   return (
     <>
@@ -18,6 +22,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginForm/>} />
         <Route path="/register" element={<Register/>} />
+        <Route path="/wokerhomepage" element={<WorkerHomePage/>} />
       </Routes>
     </div>
     </>

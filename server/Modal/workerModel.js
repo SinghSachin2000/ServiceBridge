@@ -12,9 +12,15 @@ const workerSchema = new mongoose.Schema({
   currpassword: {
     type: String,
   },
-  phone: {
-    type: Number,
-    required: true,
+  phoneno: {
+    countryCode: {
+      type: String,
+      required: true
+    },
+    number: {
+      type: String,
+      required: true
+    }
   },
   profileImg: {
     type: String,
