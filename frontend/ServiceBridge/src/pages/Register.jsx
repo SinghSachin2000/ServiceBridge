@@ -1,5 +1,5 @@
 import registerImg from "../assets/signupImg.jpg"
-import Template from "../components/core/Auth/Template "
+import Template from "../components/core/Auth/Template"
 
 function Register(){
     return (

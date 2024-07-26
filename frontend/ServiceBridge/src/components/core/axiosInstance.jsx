@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const baseUrlExport = "https://servicebridge.onrender.com";
+export const baseUrlExport = "https://localhost:3001/api/v1";
 
 const instance = axios.create({
   baseURL: baseUrlExport,

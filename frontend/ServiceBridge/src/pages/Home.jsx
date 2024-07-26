@@ -1,55 +1,28 @@
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react"
 import { useQueries, useQuery } from "@tanstack/react-query";
 import {getData} from "../components/core/apiHandler"
-
+import {Link} from "react-router-dom"
 export default function Home() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  const first = useQuery({
-    queryKey:["get request"],
-    queryFn:async()=>{
-      return await getData("http://example.com/articles",{},{});
-    }
-  })
-console.log(first.data.data);
+//   const first = useQuery({
+//     queryKey:["get request"],
+//     queryFn:async()=>{
+//       return await getData("http://example.com/articles",{},{});
+//     }
+//   })
+// console.log(first.data.data);
   return (
-    <>
-      <Button onPress={onOpen}>Open Modal</Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
-              <ModalBody>
-                <p> 
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
-                  dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis. 
-                  Velit duis sit officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. 
-                  Et mollit incididunt nisi consectetur esse laborum eiusmod pariatur 
-                  proident Lorem eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Action
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-    </>
+   <div>
+      {/* section 1 */}
+      <div className="flex flex-col items-center mt-10 ">
+        <h1 className="text-5xl font-semibold p-4">
+        Effortless Publishing
+        </h1>
+        <p className="w-[60%] text-center text-richblack-400">AI-assisted blogging for developers and teams. Draft to published in minutes.</p>
+        <Link to="/login">
+         <Button className="bg-richblack-800 m-4 text-white rounded-[30px]">Start</Button>
+        </Link>
+      </div>
+   </div>
   );
 }

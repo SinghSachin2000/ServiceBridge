@@ -1,6 +1,6 @@
 import React from "react";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button} from "@nextui-org/react";
-import Logo from "../../assets/react.svg"
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button,Image} from "@nextui-org/react";
+import Logo from "../../assets/logo.png"
 function NavbarFn(){
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
@@ -18,26 +18,27 @@ function NavbarFn(){
     ];
   
     return (
-      <Navbar onMenuOpenChange={setIsMenuOpen}>
+      <Navbar onMenuOpenChange={setIsMenuOpen} className="bg-white m-4 rounded-full w-[98%] drop-shadow-xl">
         <NavbarContent>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             className="sm:hidden"
           />
           <NavbarBrand>
-            <Image src={Logo} width="100" height="100" alt="logog"/>
-            <p className="font-bold text-inherit">ACME</p>
+            <Link href="/">
+            <Image src={Logo} width="100" height="100" alt="logog" loading="lazy"/>
+            </Link>
           </NavbarBrand>
         </NavbarContent>
   
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem>
-            <Link color="foreground" href="#">
+            <Link color="brownWood" className="text-black" href="#">
               Features
             </Link>
           </NavbarItem>
           <NavbarItem isActive>
-            <Link href="#" aria-current="page">
+            <Link href="#" aria-current="page" className="text-black">
               Customers
             </Link>
           </NavbarItem>
@@ -47,13 +48,14 @@ function NavbarFn(){
             </Link>
           </NavbarItem>
         </NavbarContent>
+        
         <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex">
-            <Link href="#">Login</Link>
+          <NavbarItem className="hidden lg:flex ">
+            <Link href="/login">Login</Link>
           </NavbarItem>
           <NavbarItem>
-            <Button as={Link} color="primary" href="#" variant="flat">
-              Sign Up
+            <Button as={Link} color="primary" href="/register" variant="flat">
+              Register
             </Button>
           </NavbarItem>
         </NavbarContent>

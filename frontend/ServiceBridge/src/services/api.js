@@ -1,5 +1,8 @@
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL
 
+if (!BASE_URL) {
+   throw new Error("VITE_REACT_APP_BASE_URL is not defined");
+}
 export const endpoints ={
 REGISTER_API_USER: BASE_URL + "/user/register-user",
 REGISTER_API_WORKER : BASE_URL + "/worker/register-worker",
