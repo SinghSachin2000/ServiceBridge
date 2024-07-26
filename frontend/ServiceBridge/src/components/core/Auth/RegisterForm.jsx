@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import Tab from "../../common/Tab"
-import { ACCOUNT_TYPE } from "../../../../../../server/utils/constants"
+import { ACCOUNT_TYPE } from "../../../utils/constants"
 import CountryCode from "../../../data/countrycode.json"
 import {endpoints} from "../../../services/api"
 
@@ -18,12 +18,7 @@ const {
 } =endpoints
 function RegisterForm(){
     const navigate = useNavigate()
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors, isSubmitSuccessful },
-    } = useForm()
+
     const [accountType, setAccountType] = useState(ACCOUNT_TYPE.USER)
 
     const [formData, setFormData] = useState({
