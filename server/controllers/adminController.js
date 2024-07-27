@@ -34,6 +34,12 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    if(!email || !password){
+      return res.status(404).json({
+        success:false,
+        message:"all feilds are required"
+      })
+    }
     let admin = await Admin.findOne({
       email: email
     }).select("+password");
@@ -52,11 +58,7 @@ export const login = async (req, res, next) => {
         success: false
       })
     }
-    createCookie(admin._id);
-    return res.json({
-      sucess: "true",
-      admin
-    })
+    createCookie(res,admin._id,admin);
 
   } catch (e) {
     next(e);
@@ -125,7 +127,7 @@ export const deleteCategory = async (req, res, next) => {
 export const createCategory = async (req, res, next) => {
   try {
     const { name, description } = req.body;
-    if (!name) {
+    if (!name || !description) {
       return res.status(400).json({
         message: "Name not found",
         success: false

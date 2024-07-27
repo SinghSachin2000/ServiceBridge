@@ -4,23 +4,23 @@ import { createCookieWorker } from '../utils/createCookike.js';
 
 
 export const register = async (req, res) => {
-  const { name, password, phone } = req.body;
-  console.log(req.body);
 
   try {
-    if (!name || !password || !phone) {
+    const { name, password,phoneno } = req.body;
+    console.log(req.body);
+    if (!name  ||!password || !phoneno || !phoneno.countryCode || !phoneno.number) {
       return res.status(403).json({
         success: false,
         message: 'All fields are required',
       });
     }
 
-    let existingUser = await workerModel.findOne({ phone });
+    let existingUser = await workerModel.findOne({ phoneno });
 
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: 'Worker already exists, please try with another number or login instead',
+        message: 'Worker already exists, please try with email or login instead',
       });
     }
 
@@ -30,7 +30,7 @@ export const register = async (req, res) => {
     let newUser = await workerModel.create({
       name,
       password: hashedPassword,
-      phone,
+      phoneno
     });
 
     createCookieWorker(res,newUser._id,newUser);
@@ -46,16 +46,15 @@ export const register = async (req, res) => {
 
 
 export const login = async (req, res) => {
-  const { password, phone } = req.body;
-
   try {
-    if (!password || !phone) {
+    const { password, phoneno } = req.body;
+    if (!password || !phoneno || !phoneno.countryCode || !phoneno.number) {
     res.status(403).json({
       success:false,
       message:"Both the feilds are required"
     })
   }
-  let worker =await workerModel.findOne({ phone: phone});
+  let worker =await workerModel.findOne({ phoneno: phoneno});
 
   if (!worker) {
     return res.status(404).json({
@@ -104,7 +103,12 @@ export const getProfile = async (req, res) => {
 export const updateAddress = async (req, res) => {
   try {
     const { lat, lng } = req.body;
-
+if(!lat || !lng){
+  return res.status(403).json({
+    success:false,
+    message:"longitude and latitude both are required"
+  })
+}
     const workerId = req.worker._id
     
     const workerAdress = await workerModel.findById(workerId);

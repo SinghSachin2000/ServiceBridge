@@ -1,5 +1,6 @@
 import Job from "../Modal/JobModal.js";
-import { sendSms } from "../utils/sendNotification.js";
+import sendSms from "../utils/sendNotification.js";
+
 export const getSearch = async (req, res, next) => {
   try {
     const { location } = req.user;
@@ -138,16 +139,17 @@ export const getJobByCategory = async (req, res, next) => {
 
 export const connectToEmployee = async (req, res, next) => {
   try {
-    /*
-    const { id, message } = req.body;
+    const { id } = req.body;
     const job = await Job.findById(id);
     const { workerId } = job;
     const worker = await Worker.findById({
       _id: workerId
     });
-    */
-    const message = await sendSms();
-    console.log(message);
+    const message = await sendSms(worker.phoneNo, `This is message from the client click here to accept the deal https://service-bridge-liard.vercel.app/worker/user/connect/:${id}`);
+    return res.status(200).json({
+      message: "Message sent to the worker will call you shortly",
+      success: true,
+    })
   } catch (error) {
     next(error);
   }
