@@ -1,6 +1,7 @@
 import workerModel from '../Modal/workerModel.js';
 import bcrypt from 'bcrypt';
 import { createCookieWorker } from '../utils/createCookike.js';
+import Job from '../Modal/JobModal.js';
 
 
 export const register = async (req, res) => {
@@ -186,4 +187,32 @@ export const updateProfile = async (req, res) => {
     })
   }
 }
+
+//Fetching worker jobs
+export const myJobs = async (req, res) => {
+  const workerId = req.worker._id;
+  console.log(workerId);
+
+  try {
+    const workerJobs = await Job.find({ workerId }).select('title categoryId description images price status createdAt');
+
+    if (!workerJobs || workerJobs.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'No jobs found for this worker',
+      });
+    }
+    
+    return res.status(200).json({
+      success: true,
+      jobs: workerJobs,
+    });
+  } catch (error) {
+    console.error('Error fetching jobs:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error',
+    });
+  }
+};
 
