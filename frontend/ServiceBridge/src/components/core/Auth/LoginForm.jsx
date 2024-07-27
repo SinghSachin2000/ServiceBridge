@@ -1,106 +1,175 @@
 import { useState } from "react";
-import {useDispatch} from "react-redux"
-import {Link,useNavigate} from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
+import { Tabs, Tab, Input, Button, Select, SelectItem } from "@nextui-org/react";
+import logo from "../../../assets/logo.png";
+import CountryCode from "../../../data/countrycode.json";
 
-function LoginForm(){
-    const navigate = useNavigate()
-    const dispatch= useDispatch()
+function LoginForm() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [submitting, setSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  })
+  const [formDataWorker, setFormDataWorker] = useState({
+    phoneNo: {
+      countryCode: "",
+      number: ""
+    },
+    password: ""
+  })
+  const [showPassword, setShowPassword] = useState(false)
+  const { email, password } = formData
 
-    const [formData,setFormData] = useState({
-        email:"",
-        password:"",
-    })
+  const handleOnChange = (e, type) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [type]: e.target.value,
 
-const [showPassword,setShowPassword] = useState(false)
-const {email,password} = formData
-
-const handleonChange = (e)=>{
-    setFormData((prevData)=>({
-        
-            ...prevData,
-            [e.target.name]:e.target.value,
-        
     }))
-}
+  }
 
-// const AddDeatils = useMutation({
-//     mutationKey : ["addDeatils"],
-//     mutationfn: async (data) => {
-//         return await postData("/register", data);
-//     },
-//     onSuccess: (data) => {
-//       console.log(data.data);
-//     },
-//     onError : (data) => {
-//        console.log(data);
-//     }
-// })
-    
-
-const handleonSubmit = (e)=>{
+  const handleOnSubmit = (e) => {
     e.preventDefault()
     dispatch()
     // AddDeatils.mutate(data);
-}
+  }
 
-return (
-    <form onSubmit={handleonSubmit}
-    className="mt-6 flex w-full flex-col gap-y-4 w-[300px] shadow-2xl p-6"> 
-      
-<label className="w-full">
-<p className="mb-1 text-[0.875rem] leading-[1.375rem] ">
-          Email Address <sup className="text-pink-200">*</sup>
-        </p>
-  <input
-  required 
-  type="text"
-  name="email"
-  value={email}
-  onChange={handleonChange}
-  placeholder="Enter email address"
-  className = "form-style w-full"
-  />      
-</label>
+  return (
+    <div className="flex items-center w-full justify-center items-center h-[100vh]">
+      <div className="shadow-2xl flex bg-white flex-col w-[40vw] gap-4 h-3/4 justify-center font-qs p-8 rounded-2xl">
+        <Tabs classNames={{
+          tabList: "gap-6 w-full relative rounded-none border-b border-divider",
+        }} color="primary" aria-label="AuthRegister">
+          <Tab key="Register" title={
+            <h3 className="text-2xl font-bold">User</h3>
+          }>
+            <form onSubmit={(e) => handleOnSubmit(e)} className="flex w-full flex-col gap-4">
+              <Input
+                required
+                label="Email Address"
+                type="text"
+                name="email"
+                value={email}
+                onChange={(e) => handleOnChange(e, "email")}
+              />
 
-<label className="relative">
-        <p className="mb-1 text-[0.875rem] leading-[1.375rem] ">
-          Password <sup className="text-pink-200">*</sup>
-        </p>
-        <input
-          required
-          type={showPassword ? "text" : "password"}
-          name="password"
-          value={password}
-          onChange={handleonChange}
-          placeholder="Enter Password"
-          className="form-style w-full !pr-10"
-        />
-        <span
-          onClick={() => setShowPassword((prev) => !prev)}
-          className="absolute right-3 top-[38px] z-[10] cursor-pointer"
-        >
-          {showPassword ? (
-            <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
-          ) : (
-            <AiOutlineEye fontSize={24} fill="#AFB2BF" />
-          )}
-        </span>
-        <Link to="/forgot-password">
-          <p className="mt-1 ml-auto max-w-max text-xs text-blue-100">
-            Forgot Password
-          </p>
-        </Link>
-      </label>
-      <button
-        type="submit"
-        className="mt-6 rounded-[8px] bg-[#00aaee] py-[8px] px-[12px] font-medium text-richblack-900"
-      >
-        Login
-      </button>
+              <Input
+                required
+                type={showPassword ? "text" : "password"}
+                name="password"
+                endContent={
+                  <span
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+                    ) : (
+                      <AiOutlineEye fontSize={24} fill="#AFB2BF" />
+                    )}
+                  </span>
+                }
+                label="Password"
+                value={password}
+                onChange={(e) => handleOnChange(e, "password")}
+              />
+              <Button
+                radius="none"
+                type="submit"
+                color="primary"
+                isLoading={submitting}
+              >
+                Create Account
+              </Button>
+            </form >
+          </Tab>
+          <Tab key="Worker" title={
+            <h3 className="text-2xl font-bold">Worker</h3>
+          }>
+            <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-row w-full "></div>
+                <Select
+                  required
+                  label="Country Code"
+                  selectedKeys={[formDataWorker.phoneNo.countryCode]}
+                  onChange={(e) => {
+                    setFormDataWorker((prevData) => ({
+                      ...prevData,
+                      phoneNo: {
+                        ...prevData.phoneNo,
+                        countryCode: e.target.value,
+                      },
+                    }))
+                  }
+                  }
+                >
+                  {CountryCode.map((ele) => (
+                    <SelectItem
+                      key={ele.country}
+                      value={ele.country}
+                    >
+                      {ele.code}
+                    </SelectItem>
+                  ))}
+                </Select>
 
-    </form>
-)
+
+                <Input
+                  required
+                  type="text"
+                  className="w-full"
+                  placeholder="Phone No"
+                  value={formDataWorker.phoneNo.number}
+                  onChange={(e) =>
+                    setFormDataWorker((prevData) => ({
+                      ...prevData,
+                      phoneno: {
+                        ...prevData.phoneNo,
+                        number: e.target.value,
+                      },
+                    }))
+                  }
+                />
+
+              </div>
+              <Input
+                required
+                type={showPassword ? "text" : "password"}
+                name="password"
+                endContent={
+                  <span
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+                    ) : (
+                      <AiOutlineEye fontSize={24} fill="#AFB2BF" />
+                    )}
+                  </span>
+                }
+                label="Password"
+                value={password}
+                onChange={(e) => handleOnChange(e, "password")}
+              />
+
+              <Button
+                radius="none"
+                type="submit"
+                color="primary"
+                isLoading={submitting}
+              >
+                Login
+              </Button>
+            </form >
+          </Tab>
+        </Tabs>
+      </div >
+    </div>
+  )
 }
 
 export default LoginForm
