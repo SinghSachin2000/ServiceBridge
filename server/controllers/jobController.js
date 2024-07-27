@@ -72,6 +72,9 @@ export const getJobDetails = async (req, res, next) => {
         }
       },
       {
+        $unwind: "$Worker"
+      },
+      {
         $project: {
           _id: 1,
           title: 1,
@@ -99,4 +102,5 @@ export const getJobDetails = async (req, res, next) => {
     next(e);
   }
 }
-//TODO :get all the reviews by jobid
+
+
