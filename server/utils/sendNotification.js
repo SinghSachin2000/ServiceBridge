@@ -10,7 +10,6 @@ const vonage = new Vonage({
 })
 const from = "ServiceBridge"
 const to = "917303616561"
-const text = 'A text message sent using the Vonage SMS API'
 
 export default async function sendSMS(to, test) {
   await vonage.sms.send({ to, from, text })
