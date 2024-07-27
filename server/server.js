@@ -14,17 +14,17 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8001;
 
-
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(morgan("dev"));
 app.use(
 	cors({
 		origin: "*",
 		credentials: true,
+		methods: ['GET', 'POST', 'DELETE', 'PUT']
 	})
 );
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(morgan("dev"));
 
 // Route splitting
 app.use("/api/v1/user", userRouter);

@@ -6,7 +6,7 @@ import bcrypt from "bcrypt"
 
 export const register = async (req, res) => {
   try {
-    const { name, email, password, profileImage, phoneno } = req.body;
+    const { name, email, password, phoneno } = req.body;
     console.log(req.body);
     if (!name || !email || !password || !phoneno || !phoneno.countryCode || !phoneno.number) {
       return res.status(400).json({
@@ -29,7 +29,6 @@ export const register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      profileImage,
       phoneno,
       active: true,
     });
