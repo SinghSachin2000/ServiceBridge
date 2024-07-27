@@ -24,6 +24,7 @@ export const register = async (req, res, next) => {
       email,
       password: hash
     });
+
     createCookie(res, admin._id, admin);
 
   } catch (e) {
@@ -34,10 +35,10 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    if(!email || !password){
+    if (!email || !password) {
       return res.status(404).json({
-        success:false,
-        message:"all feilds are required"
+        success: false,
+        message: "all feilds are required"
       })
     }
     let admin = await Admin.findOne({
@@ -58,7 +59,7 @@ export const login = async (req, res, next) => {
         success: false
       })
     }
-    createCookie(res,admin._id,admin);
+    createCookie(res, admin._id, admin);
 
   } catch (e) {
     next(e);
@@ -127,9 +128,20 @@ export const deleteCategory = async (req, res, next) => {
 export const createCategory = async (req, res, next) => {
   try {
     const { name, description } = req.body;
+    console.log(req.body);
     if (!name || !description) {
       return res.status(400).json({
         message: "Name not found",
+        success: false
+      })
+    }
+    const exisiting = await Category.findOne({
+      name,
+      description
+    });
+    if (exisiting) {
+      return res.status(400).json({
+        message: "Category already exists",
         success: false
       })
     }
