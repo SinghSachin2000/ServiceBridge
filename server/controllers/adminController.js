@@ -149,6 +149,7 @@ export const createCategory = async (req, res, next) => {
       name,
       description
     });
+    console.log(category);
     if (!category) {
       return res.status(400).json({
         message: "Error in category creation",

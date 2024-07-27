@@ -2,46 +2,58 @@ import { mongoose } from "mongoose";
 import Category from "../Modal/CategoryModal.js";
 import Job from "../Modal/JobModal.js";
 
-export const createJob = async (req, res) => {
+export const createJob = async (req, res, next) => {
   try {
     const { name, description, images, categoryId, price, minHour, maxHour } = req.body;
-    const category = await Category.findById({
-      id: categoryId
-    });
+
+    const category = await Category.findById(categoryId);
+
+    console.log("Category:", category);
     if (!category) {
       return res.status(400).json({
         message: "Category not found",
         success: false
+      });
+    }
+
+    const worker = req.worker;
+    if(worker.location.cordinates.length == 0){
+      return res.status(400).json({
+        message : "Please give access to your location",
+        success : false
       })
     }
-    const worker = req.worker;
+    console.log("Worker:", worker);
     const noOfHours = [minHour, maxHour];
+
     const createJob = await Job.create({
-      name: name,
+      title: name,
       description: description,
       images: images,
       workerId: worker._id,
-      categoryId: categoryId,
+      categoryId: category._id,
       location: worker.location,
       noOfHours: noOfHours,
       price: price
     });
+
+    console.log("Created Job:", createJob);
     if (!createJob) {
-      console.log(createJob);
       return res.status(400).json({
         message: "Job creation failed",
         success: false
-      })
+      });
     }
+
     return res.status(200).json({
       job: createJob,
       message: "Job creation successful",
-      success: false
+      success: true
     });
   } catch (error) {
     next(error);
   }
-}
+};
 export const getJobDetails = async (req, res, next) => {
   try {
     const { id } = req.params;
