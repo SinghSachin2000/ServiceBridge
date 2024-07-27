@@ -10,6 +10,6 @@ const jobRouter = express.Router();
 jobRouter.post('/create-job', isWorkerAuth, createJob);
 jobRouter.get('/get-jobs', isUserAuth, getSearch);
 jobRouter.post('/get-jobs', isUserAuth, getJobByCategory);
-jobRouter.post('/connect', connectToEmployee);
+jobRouter.post('/connect/:id',isUserAuth, connectToEmployee);
 
 export default jobRouter;

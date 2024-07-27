@@ -1,6 +1,6 @@
 import Job from "../Modal/JobModal.js";
 import sendSms from "../utils/sendNotification.js";
-
+import Worker from "../Modal/workerModel.js"
 export const getSearch = async (req, res, next) => {
   try {
     const { location } = req.user;
@@ -139,13 +139,44 @@ export const getJobByCategory = async (req, res, next) => {
 
 export const connectToEmployee = async (req, res, next) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const job = await Job.findById(id);
+    if (!job) {
+      return res.status(404).json({
+        message: "Job not found",
+        success: false,
+      });
+    }
     const { workerId } = job;
     const worker = await Worker.findById({
       _id: workerId
     });
-    const message = await sendSms(worker.phoneNo, `This is message from the client click here to accept the deal https://service-bridge-liard.vercel.app/worker/user/connect/:${id}`);
+
+    if (!worker) {
+      return res.status(404).json({
+        message: "Worker not found",
+        success: false,
+      });
+    }
+    const message = await sendSms();
+    console.log(message);
+    //const message = await sendSms(worker.phoneNo, `This is message from the client click here to accept the deal https://service-bridge-liard.vercel.app/worker/user/connect/:${id}`);
+    //  const message = true;
+    const value = message;
+    let updatedJob;
+    if(value==='Ordered'){
+     updatedJob = Job.findByIdAndUpdate({id},{
+                            $push:{
+                              status:'Ordered'
+                                   } },{new:true })
+    }else{
+      updatedJob = Job.findByIdAndUpdate({id},{
+        $push:{
+          status:'Rejected'
+               } },{new:true })
+    }
+
+
     return res.status(200).json({
       message: "Message sent to the worker will call you shortly",
       success: true,

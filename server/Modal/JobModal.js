@@ -44,7 +44,7 @@ const jobSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Posted', 'Ordered', 'Accepted', 'Completed'],
+    enum: ['Posted', 'Ordered', 'Rejected', 'Completed'],
     default: 'Posted'
   }
 })

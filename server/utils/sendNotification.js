@@ -9,9 +9,9 @@ const vonage = new Vonage({
   apiSecret: VOYAGE_API_SECRET
 })
 const from = "ServiceBridge"
-const to = "917303616561"
-
-export default async function sendSMS(to, test) {
+const to = "918920755078"
+const text = "Hi sachin"
+export default async function sendSMS() {
   await vonage.sms.send({ to, from, text })
     .then(resp => { console.log('Message sent successfully'); console.log(resp); })
     .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });

@@ -103,4 +103,14 @@ export const getJobDetails = async (req, res, next) => {
   }
 }
 
+export const getJobStatus =async (req,res,next)=>{
+  try{
+
+  }catch(error){
+    return res.status(400).json({
+      success:false,
+      message:"failed to get the job status"
+    })
+  }
+}
 
