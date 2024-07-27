@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Navbar from "./components/common/Navbar"
 import LoginForm from './pages/Login'
 import Register from "./pages/Register"
+import Login from "./components/core/Auth/LoginForm"
 import WorkerHomePage from './pages/WorkerHomepage'
 
 
@@ -17,7 +18,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LoginForm />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/worker/homepage" element={<WorkerHomePage />} />
         </Routes>

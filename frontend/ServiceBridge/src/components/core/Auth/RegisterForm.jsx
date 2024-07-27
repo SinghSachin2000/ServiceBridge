@@ -117,9 +117,9 @@ function RegisterForm() {
 
   return (
     <>
-      <div className="shadow-2xl flex flex-col gap-4 w-1/2 h-[80vh] justify-center font-qs p-8 rounded-2xl">
+      <div className="shadow-2xl flex flex-col w-full md:w-1/2 gap-4 h-[80vh] justify-center font-qs p-8 rounded-2xl">
         <Tabs classNames={{
-          tabList: "gap-6 w-full relative rounded-none p-0 border-b border-divider",
+          tabList: "gap-6 w-full relative rounded-none border-b border-divider",
         }} color="primary" aria-label="AuthRegister">
           <Tab key="Register" title={
             <h3 className="text-2xl font-bold">User</h3>
@@ -211,17 +211,15 @@ function RegisterForm() {
                   </div>
                 </div>
               </div>
-
               <Button
-                radius="lg"
+                radius="none"
                 type="submit"
-                isLoading={userRegister.isLoading || workerRegister.isLoading}
-                className="rounded-[8px] bg-[#00aaee] py-[8px] px-[12px] font-medium text-richblack-900"
+                color="primary"
+                isLoading={submitting}
               >
                 Create Account
               </Button>
             </form >
-
           </Tab>
           <Tab key="Worker" title={
             <h3 className="text-2xl font-bold">Worker</h3>
