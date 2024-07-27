@@ -17,7 +17,10 @@ export const createJob = async (req, res, next) => {
     }
 
     const worker = req.worker;
-    if(worker.location.cordinates.length == 0){
+    const { location } = worker;
+    console.log(location);
+    const { coordinates } = location;
+    if(coordinates.length == 0){
       return res.status(400).json({
         message : "Please give access to your location",
         success : false
