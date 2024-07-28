@@ -1,4 +1,5 @@
 import Address from "../Modal/AddressModal.js";
+import Job from "../Modal/JobModal.js";
 import User from "../Modal/UserModal.js";
 const { COOKIE_NAME, JWT_SECRET } = process.env;
 import { createCookieUser } from "../utils/createCookike.js";
@@ -136,4 +137,37 @@ export const logout = async (req, res) => {
 }
 export const getProfile = async (req, res, next) => {
 
+}
+
+
+export const getHistory =async(req,res,next)=>{
+  try{
+  const {status}= req.query
+  const {userId}= req.user._id
+  console.log("status and userId",status,userId)
+
+  if(!status || !userId){
+    return res.status(401).json({
+      success:false,
+      message:"failed to fetch the userId and status",
+    })
+  }
+
+  const historyInfo = await Job.findById({
+    workerId: userId,
+    status: { $ne: 'Posted' }
+  })
+  console.log(historyInfo);
+
+  return res.status(200).json({
+    success:true,
+    message:"History fetched successfully",
+    historyInfo,
+  })
+  }catch(error){
+    return res.status(401).json({
+      success:false,
+      message:"Failed to fatch the history"
+    })
+  }
 }

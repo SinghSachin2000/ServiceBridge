@@ -8,7 +8,7 @@ import LoginForm from './pages/Login'
 import Register from "./pages/Register"
 import Login from "./components/core/Auth/LoginForm"
 import WorkerHomePage from './pages/WorkerHomepage'
-
+import UserDhashbord from './pages/UserDhasbord';
 
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/worker/homepage" element={<WorkerHomePage />} />
+          <Route path="/user-dashboard" element={<UserDhashbord/>} />
         </Routes>
       </div>
     </>

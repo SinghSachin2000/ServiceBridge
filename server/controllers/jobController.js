@@ -48,6 +48,12 @@ export const createJob = async (req, res, next) => {
       });
     }
 
+    const updatedCategory = await Category.findByIdAndUpdate(
+      categoryId,
+      { $push: { jobs: createJob._id } },
+      { new: true }
+    );
+    console.log("updatedcategory",updatedCategory)
     return res.status(200).json({
       job: createJob,
       message: "Job creation successful",

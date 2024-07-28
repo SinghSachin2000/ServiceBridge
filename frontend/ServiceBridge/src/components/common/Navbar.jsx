@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button, Image } from "@nextui-org/react";
-import Logo from "../../assets/logo.png"
+import Logo from "../../assets/logo.png";
+
 function NavbarFn() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const menuItems = [
     "Profile",
@@ -18,7 +32,12 @@ function NavbarFn() {
   ];
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} className="bg-white flex flex-row rounded-full  drop-shadow-xl">
+    <Navbar
+      onMenuOpenChange={setIsMenuOpen}
+      className={`flex flex-row rounded-full shadow-xl fixed w-full transition duration-300 ease-in-out ${
+        isScrolled ? "bg-white bg-opacity-75" : "bg-transparent"
+      }`}
+    >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -26,11 +45,10 @@ function NavbarFn() {
         />
         <NavbarBrand>
           <Link href="/">
-            <Image src={Logo} width="100" height="100" alt="logog" loading="lazy" />
+            <Image src={Logo} width="100" height="100" alt="logo" loading="lazy" />
           </Link>
         </NavbarBrand>
       </NavbarContent>
-
 
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex ">
@@ -61,4 +79,5 @@ function NavbarFn() {
     </Navbar>
   );
 }
-export default NavbarFn
+
+export default NavbarFn;

@@ -1,20 +1,26 @@
 import { Vonage } from '@vonage/server-sdk';
-import dotenv from "dotenv"
-dotenv.configDotenv();
+import dotenv from "dotenv";
 
+dotenv.config(); // Correct dotenv configuration
 
 const { VOYAGE_API_KEY, VOYAGE_API_SECRET } = process.env;
+
+
 const vonage = new Vonage({
   apiKey: VOYAGE_API_KEY,
   apiSecret: VOYAGE_API_SECRET
-})
-const from = "ServiceBridge"
-const to = "918920755078"
-const text = "Hi sachin"
-export default async function sendSMS() {
-  await vonage.sms.send({ to, from, text })
-    .then(resp => { console.log('Message sent successfully'); console.log(resp); })
-    .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+});
+
+const from = "Vonage APIs";
+
+export default async function sendSMS(to, text) { // Modified function to accept parameters
+  try {  
+  console.log(VOYAGE_API_KEY,VOYAGE_API_SECRET);
+    const response = await vonage.sms.send({ to, from, text });
+    console.log('Message sent successfully');
+    console.log(response);
+  } catch (err) {
+    console.log('There was an error sending the message.');
+    console.error(err);
+  }
 }
-
-

@@ -3,11 +3,14 @@ import Template from "../components/core/Auth/Template"
 
 function Register(){
     return (
-        <Template
-        title= "join our platform"
-        image = {registerImg}
-        formType="register"
-        />
+        <div className="mt-20">
+
+            <Template
+            title= "join our platform"
+            image = {registerImg}
+            formType="register"
+            />
+        </div>
     )
 }
 

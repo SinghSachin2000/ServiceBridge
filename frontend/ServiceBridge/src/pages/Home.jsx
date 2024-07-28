@@ -14,7 +14,7 @@ export default function Home() {
   return (
    <div>
       {/* section 1 */}
-      <div className="flex flex-col items-center mt-10 ">
+      <div className="flex flex-col items-center mt-20 ">
         <h1 className="text-5xl font-semibold p-4">
         Effortless Publishing
         </h1>

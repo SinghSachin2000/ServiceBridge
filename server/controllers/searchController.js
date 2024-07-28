@@ -158,24 +158,22 @@ export const connectToEmployee = async (req, res, next) => {
         success: false,
       });
     }
-    const message = await sendSms();
-    console.log(message);
-    //const message = await sendSms(worker.phoneNo, `This is message from the client click here to accept the deal https://service-bridge-liard.vercel.app/worker/user/connect/:${id}`);
-    //  const message = true;
-    const value = message;
-    let updatedJob;
-    if(value==='Ordered'){
-     updatedJob = Job.findByIdAndUpdate({id},{
-                            $push:{
-                              status:'Ordered'
-                                   } },{new:true })
-    }else{
-      updatedJob = Job.findByIdAndUpdate({id},{
-        $push:{
-          status:'Rejected'
-               } },{new:true })
-    }
+ const message = await sendSms("918920755078", `This is message from the client click here to accept the deal https://service-bridge-liard.vercel.app/worker/user/connect/:${id}`);                          
+ console.log(message);
+      const { status } = req.body;
+      console.log(status);
+      if (status !== 'Ordered' && status !== 'Rejected') {
+        return res.status(400).json({
+          message: "Invalid status",
+          success: false,
+        });
+      }
 
+    const updatedJob = await Job.findByIdAndUpdate(
+      id,
+      { $set: { status: status } }
+    );
+    console.log(updatedJob);
 
     return res.status(200).json({
       message: "Message sent to the worker will call you shortly",
