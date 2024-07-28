@@ -116,8 +116,8 @@ function RegisterForm() {
   ];
 
   return (
-    <>
-      <div className="shadow-2xl flex flex-col w-full md:w-1/2 gap-4 h-[80vh] justify-center font-qs p-8 rounded-2xl">
+    <div className="flex items-center bg-gradient-r from-pink-500 to-violet-300 relative w-full justify-center items-center h-[100vh]">
+      <div className="shadow-2xl flex flex-col gap-4 w-full md:w-1/2 h-[80vh] justify-center font-qs p-8 rounded-2xl">
         <Tabs classNames={{
           tabList: "gap-6 w-full relative rounded-none border-b border-divider",
         }} color="primary" aria-label="AuthRegister">
@@ -322,7 +322,7 @@ function RegisterForm() {
           </Tab>
         </Tabs>
       </div >
-    </>
+    </div >
   );
 }
 

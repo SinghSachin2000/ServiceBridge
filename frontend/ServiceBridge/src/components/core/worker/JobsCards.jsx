@@ -1,42 +1,18 @@
 import React from 'react';
-import { Card, Image,CardBody } from "@nextui-org/react";
+import { Card, Image, CardBody } from "@nextui-org/react";
 
 const JobCard = ({ job }) => {
   if (!job) return null;
-
+  console.log(job);
   return (
-    <Card
-      isBlurred
-      className="border-none bg-background/60 dark:bg-default-100/50 max-w-[300px] items-center"
-      shadow="sm"
-    >
-      <CardBody>
-        <div className="grid grid-cols-6 md:grid-cols-3 gap-6 md:gap-4 mx-auto flex items-center justify-items-center">
-          <div className=" col-span-6 md:col-span-4">
-            <Image
-              alt={job.name}
-              className="object-cover mx-auto  w-full"
-              height={200}
-              shadow="md"
-              src={job.images[0]}
-            //   width="100%"
-            />
-          </div>
-
-          <div className="flex flex-col col-span-6 md:col-span-8">
-            <div className="flex flex-col gap-2">
-              <h3 className="font-semibold text-foreground/90">{job.name}</h3>
-              <p className="text-small text-foreground/80">{job.description}</p>
-              <h1 className="text-large font-medium mt-2">Price: ${job.price}</h1>
-              <h1 className="text-large font-medium mt-2">Hours: {job.minHour} - {job.maxHour}</h1>
-            </div>
-            <div className="flex flex-col mt-3 gap-1">
-              <div className="flex flex-col">
-                {job.location && <div className="text-small text-foreground/50">Location: {job.location}</div>}
-                {job.categoryId && <div className="text-small text-foreground/50">Category: {job.categoryId}</div>}
-                {job.worker?.name && <div className="text-small text-foreground/50">Worker: {job.worker.name}</div>}
-              </div>
-            </div>
+    <Card shadow='xl' className='w-[100%] h-fit  font-qs lg:w-[70%]'>
+      <CardBody className='flex gap-4 flex-col h-full'>
+        <Image src={job.images[0]} className='h-1/2' alt='job image' />
+        <div className='flex flex-col gap-3 w-full justify-start'>
+          <h3 className='text-xl lg:text-2xl font-bold'>{job.name}</h3>
+          <div className='flex flex-row justify-between w-full'>
+            <h3 className='text-lg font-semibold'>Rs {job.price}</h3>
+            <h3 className='text-lg font-bold'>{job.minHour} hr - {job.maxHour} hr</h3>
           </div>
         </div>
       </CardBody>

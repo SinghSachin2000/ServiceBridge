@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
-import { Tabs, Tab, Input, Button, Select, SelectItem } from "@nextui-org/react";
+import { Tabs, Tab, Input, Button, Select, SelectItem, Image } from "@nextui-org/react";
 import logo from "../../../assets/logo.png";
 import CountryCode from "../../../data/countrycode.json";
 
@@ -39,8 +39,8 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex items-center w-full justify-center items-center h-[100vh]">
-      <div className="shadow-2xl flex bg-white flex-col w-[40vw] gap-4 h-3/4 justify-center font-qs p-8 rounded-2xl">
+    <div className="flex tab items-center w-full justify-center items-center h-[100vh]">
+      <div className="shadow-2xl bg-white flex  flex-col w-full md:w-1/2 gap-4 h-3/4 justify-center font-qs p-8 rounded-2xl">
         <Tabs classNames={{
           tabList: "gap-6 w-full relative rounded-none border-b border-divider",
         }} color="primary" aria-label="AuthRegister">
@@ -79,10 +79,11 @@ function LoginForm() {
               <Button
                 radius="none"
                 type="submit"
+                className="text-xl"
                 color="primary"
                 isLoading={submitting}
               >
-                Create Account
+                Login
               </Button>
             </form >
           </Tab>
@@ -91,50 +92,50 @@ function LoginForm() {
           }>
             <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <div className="flex flex-row w-full "></div>
-                <Select
-                  required
-                  label="Country Code"
-                  selectedKeys={[formDataWorker.phoneNo.countryCode]}
-                  onChange={(e) => {
-                    setFormDataWorker((prevData) => ({
-                      ...prevData,
-                      phoneNo: {
-                        ...prevData.phoneNo,
-                        countryCode: e.target.value,
-                      },
-                    }))
-                  }
-                  }
-                >
-                  {CountryCode.map((ele) => (
-                    <SelectItem
-                      key={ele.country}
-                      value={ele.country}
-                    >
-                      {ele.code}
-                    </SelectItem>
-                  ))}
-                </Select>
+                <div className="flex flex-row w-full items-center">
+                  <Select
+                    required
+                    label="Country Code"
+                    selectedKeys={[formDataWorker.phoneNo.countryCode]}
+                    onChange={(e) => {
+                      setFormDataWorker((prevData) => ({
+                        ...prevData,
+                        phoneNo: {
+                          ...prevData.phoneNo,
+                          countryCode: e.target.value,
+                        },
+                      }))
+                    }
+                    }
+                  >
+                    {CountryCode.map((ele) => (
+                      <SelectItem
+                        key={ele.country}
+                        value={ele.country}
+                      >
+                        {ele.code}
+                      </SelectItem>
+                    ))}
+                  </Select>
 
 
-                <Input
-                  required
-                  type="text"
-                  className="w-full"
-                  placeholder="Phone No"
-                  value={formDataWorker.phoneNo.number}
-                  onChange={(e) =>
-                    setFormDataWorker((prevData) => ({
-                      ...prevData,
-                      phoneno: {
-                        ...prevData.phoneNo,
-                        number: e.target.value,
-                      },
-                    }))
-                  }
-                />
-
+                  <Input
+                    required
+                    type="text"
+                    className="w-full"
+                    placeholder="Phone No"
+                    value={formDataWorker.phoneNo.number}
+                    onChange={(e) =>
+                      setFormDataWorker((prevData) => ({
+                        ...prevData,
+                        phoneno: {
+                          ...prevData.phoneNo,
+                          number: e.target.value,
+                        },
+                      }))
+                    }
+                  />
+                </div>
               </div>
               <Input
                 required
@@ -159,6 +160,7 @@ function LoginForm() {
               <Button
                 radius="none"
                 type="submit"
+                className="text-xl"
                 color="primary"
                 isLoading={submitting}
               >
