@@ -1,5 +1,5 @@
 import Address from "../Modal/AddressModal.js";
-import Job from "../Modal/JobModal.js";
+import Category from "../Modal/CategoryModal.js";
 import User from "../Modal/UserModal.js";
 const { COOKIE_NAME, JWT_SECRET } = process.env;
 import { createCookieUser } from "../utils/createCookike.js";
@@ -135,6 +135,26 @@ export const logout = async (req, res) => {
     })
   }
 }
+
+export const getAllCategory = async (req, res, next) => {
+  try {
+    const allCat = await Category.find();
+
+    if (allCat.length === 0) {
+      return res.status(404).json({
+        message: "Categories not found"
+      });
+    }
+
+    return res.status(200).json({
+      categories: allCat,
+      success: false
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getProfile = async (req, res, next) => {
 
 }

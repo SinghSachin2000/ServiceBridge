@@ -151,34 +151,12 @@ export const connectToEmployee = async (req, res, next) => {
     const worker = await Worker.findById({
       _id: workerId
     });
-
-    if (!worker) {
-      return res.status(404).json({
-        message: "Worker not found",
-        success: false,
-      });
-    }
- const message = await sendSms("918920755078", `This is message from the client click here to accept the deal https://service-bridge-liard.vercel.app/worker/user/connect/:${id}`);                          
- console.log(message);
-      const { status } = req.body;
-      console.log(status);
-      if (status !== 'Ordered' && status !== 'Rejected') {
-        return res.status(400).json({
-          message: "Invalid status",
-          success: false,
-        });
-      }
-
-    const updatedJob = await Job.findByIdAndUpdate(
-      id,
-      { $set: { status: status } }
-    );
-    console.log(updatedJob);
-
+    const message = await sendSms(worker.phoneNo, `This is message from the client click here to accept the deal https://service-bridge-liard.vercel.app/worker/user/connect/${id}`);
     return res.status(200).json({
       message: "Message sent to the worker will call you shortly",
       success: true,
-    })
+    });
+
   } catch (error) {
     next(error);
   }
