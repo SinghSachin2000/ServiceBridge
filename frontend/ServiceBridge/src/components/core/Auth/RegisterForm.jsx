@@ -108,18 +108,8 @@ function RegisterForm() {
     setAccountType(ACCOUNT_TYPE.USER);
   };
 
-  const tabData = [
-    {
-      id: 1,
-      tabName: "User",
-      type: ACCOUNT_TYPE.USER,
-    },
-    {
-      id: 2,
-      tabName: "Worker",
-      type: ACCOUNT_TYPE.WORKER,
-    },
-  ];
+
+
 
   return (
     <div className="flex items-center bg-gradient-r from-pink-500 to-violet-300 relative w-full justify-center items-center h-[100vh]">
