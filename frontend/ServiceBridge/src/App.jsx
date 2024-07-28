@@ -9,7 +9,7 @@ import Register from "./pages/Register"
 import Login from "./components/core/Auth/LoginForm"
 import WorkerHomePage from './pages/WorkerHomepage'
 import UserDhashbord from './pages/UserDhasbord';
-
+import { Toaster } from 'sonner';
 
 function App() {
   return (
@@ -21,9 +21,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/worker/homepage" element={<WorkerHomePage />} />
-          <Route path="/user-dashboard" element={<UserDhashbord/>} />
+          <Route path="/user-dashboard" element={<UserDhashbord />} />
         </Routes>
       </div>
+      <Toaster />
     </>
   )
 }

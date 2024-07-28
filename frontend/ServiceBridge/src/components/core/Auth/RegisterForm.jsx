@@ -8,7 +8,7 @@ import CountryCode from "../../../data/countrycode.json";
 import { endpoints } from "../../../services/api";
 import { postData } from "../apiHandler";
 import { useMutation } from "@tanstack/react-query";
-
+import { toast } from "sonner";
 const { REGISTER_API_WORKER, REGISTER_API_USER } = endpoints;
 
 function RegisterForm() {
@@ -41,6 +41,10 @@ function RegisterForm() {
     },
     onSuccess: (data) => {
       console.log(data.data);
+      toast('Registered succcessfully', {
+        position: "top-right",
+        duration: 5000,
+      });
       navigate("/");
     },
     onError: (error) => {
@@ -57,6 +61,8 @@ function RegisterForm() {
     onSuccess: (data) => {
       console.log(data.data);
       navigate("/");
+      setsubmitting(false);
+
     },
     onError: (error) => {
       console.error("User registration error:", error);
@@ -65,7 +71,7 @@ function RegisterForm() {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-
+    setsubmitting(true);
     // Validation
     if (!fullName || !email || !password || !phoneno.countryCode || !phoneno.number) {
       console.error("Validation error: All fields must be filled.");
@@ -232,15 +238,6 @@ function RegisterForm() {
                 name="fullName"
                 value={fullName}
                 onChange={(e) => handleOnChange(e, "fullName")}
-              />
-
-              <Input
-                required
-                label="Email Address"
-                type="text"
-                name="email"
-                value={email}
-                onChange={(e) => handleOnChange(e, "email")}
               />
 
               <Input

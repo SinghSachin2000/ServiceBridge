@@ -34,9 +34,8 @@ function NavbarFn() {
   return (
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
-      className={`flex flex-row rounded-full shadow-xl fixed w-full transition duration-300 ease-in-out ${
-        isScrolled ? "bg-white bg-opacity-75" : "bg-transparent"
-      }`}
+      className={`flex flex-row rounded-full bg-white shadow-xl fixed w-full transition duration-300 ease-in-out ${isScrolled ? "bg-white bg-opacity-75" : "bg-transparent"
+        }`}
     >
       <NavbarContent>
         <NavbarMenuToggle
